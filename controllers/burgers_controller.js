@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var burger = require("../models/burger.js");
+
+// Get all data from db render it into the page
 router.get("/", function(req, res) {
     burger.all(function(data) {
         var hbsObject = {
@@ -10,6 +12,8 @@ router.get("/", function(req, res) {
         res.render("index", hbsObject);
     });
 });
+
+// create new burger in db
 router.post("/", function(req, res) {
     burger.create([
         "burger_name", "devoured"
@@ -19,6 +23,8 @@ router.post("/", function(req, res) {
         res.redirect("/");
     });
 });
+
+// change 'devoured' variable to true
 router.put("/:id", function(req, res) {
     var condition = "id = " + req.params.id;
     console.log("condition", condition);
@@ -28,6 +34,8 @@ router.put("/:id", function(req, res) {
         res.redirect("/");
     });
 });
+
+// delete the burger
 router.delete("/:id", function(req, res) {
     var condition = "id = " + req.params.id;
     burger.delete(condition, function() {
